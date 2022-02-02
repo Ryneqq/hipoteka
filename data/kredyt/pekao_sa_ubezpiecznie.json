@@ -1,0 +1,67 @@
+{
+    "nazwa": "Pekao SA",
+    "wartosc_hipoteki": 700000,
+    "wklad_wlasny": 10,
+    "okres_kredytowania": 180,
+    "oprocentowanie": 6.34,
+    "koszty" : [
+        {
+            "nazwa": "prowizja",
+            "wartosc": 1.99,
+            "operator": "procent",
+            "okres": "jednorazowy"
+        },
+        {
+            "nazwa": "pomostowe",
+            "wartosc": 346.56,
+            "operator": "stala",
+            "okres": "miesieczny",
+            "okresow": 3
+        },
+        {
+            "nazwa": "ubezpieczenie zycia",
+            "wartosc": 0,
+            "operator": "stala",
+            "okres": "miesieczny"
+        },
+        {
+            "nazwa": "ubezpieczenie niskiego wkladu wlasnego",
+            "wartosc": 69.36,
+            "operator": "stala",
+            "okres": "miesieczny",
+            "okresow": 36
+        },
+        {
+            "nazwa": "ubezpieczenie hipoteki",
+            "wartosc": 700,
+            "operator": "stala",
+            "okres": "roczny"
+        },
+        {
+            "nazwa": "wycena",
+            "wartosc": 479,
+            "operator": "stala",
+            "okres": "jednorazowy"
+        }
+    ],
+    "nadplaty": [
+        {
+            "wartosc": 1000,
+            "od": 0,
+            "do": 84,
+            "po_okresie": false
+        },
+        {
+            "wartosc": 1000,
+            "od": 0,
+            "do": 36,
+            "po_okresie": true
+        }
+    ],
+    "splata": {
+        "nazwa": "nadplata",
+        "wartosc": 100,
+        "operator": "stala",
+        "okres": "miesieczny"
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "nazwa": "Uznanskiego",
+    "okres": 180,
+    "koszty": [
+        {
+            "nazwa": "odstepne",
+            "wartosc": 1300,
+            "operator": "stala",
+            "okres": "miesieczny"
+        },
+        {
+            "nazwa": "odstepne ulga wakacyjna",
+            "wartosc": -2400,
+            "operator": "stala",
+            "okres": "roczny"
+        },
+        {
+            "nazwa": "spoldzielnia",
+            "wartosc": 550,
+            "operator": "stala",
+            "okres": "miesieczny"
+        },
+        {
+            "nazwa": "eksploatacja",
+            "wartosc": 200,
+            "operator": "stala",
+            "okres": "roczny"
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "nazwa": "Zycie",
+    "okres": 180,
+    "koszty": [
+        {
+            "nazwa": "Zakupy spozywcze",
+            "wartosc": 3200,
+            "operator": "stala",
+            "okres": "miesieczny"
+        },
+        {
+            "nazwa": "Kot",
+            "wartosc": 300,
+            "operator": "stala",
+            "okres": "miesieczny"
+        },
+        {
+            "nazwa": "Samochod",
+            "wartosc": 300,
+            "operator": "stala",
+            "okres": "miesieczny"
+        },
+        {
+            "nazwa": "Lekcje gitary",
+            "wartosc": 240,
+            "operator": "stala",
+            "okres": "miesieczny"
+        }
+    ]
+}

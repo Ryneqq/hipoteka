@@ -1,0 +1,61 @@
+{
+    "nazwa": "MBank nadplata",
+    "wartosc_hipoteki": 700000,
+    "wklad_wlasny": 10,
+    "okres_kredytowania": 180,
+    "oprocentowanie": 5.98,
+    "koszty" : [
+        {
+            "nazwa": "prowizja",
+            "wartosc": 0,
+            "operator": "procent",
+            "okres": "jednorazowy"
+        },
+        {
+            "nazwa": "pomostowe",
+            "wartosc": 523.53,
+            "operator": "stala",
+            "okres": "miesieczny",
+            "okresow": 3
+        },
+        {
+            "nazwa": "ubezpieczenie zycia",
+            "wartosc": 283.5,
+            "operator": "stala",
+            "okres": "miesieczny",
+            "okresow": 60
+        },
+        {
+            "nazwa": "ubezpieczenie hipoteki",
+            "wartosc": 660,
+            "operator": "stala",
+            "okres": "roczny"
+        },
+        {
+            "nazwa": "wycena",
+            "wartosc": 400,
+            "operator": "stala",
+            "okres": "jednorazowy"
+        }
+    ],
+    "nadplaty": [
+        {
+            "wartosc": 2000,
+            "od": 0,
+            "do": 36,
+            "po_okresie": false
+        },
+        {
+            "wartosc": 1000,
+            "od": 36,
+            "do": 84,
+            "po_okresie": false
+        }
+    ],
+    "splata": {
+        "nazwa": "nadplata",
+        "wartosc": 100,
+        "operator": "stala",
+        "okres": "miesieczny"
+    }
+}

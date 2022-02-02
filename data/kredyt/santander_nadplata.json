@@ -1,0 +1,51 @@
+{
+    "nazwa": "Santander Nadplata",
+    "wartosc_hipoteki": 700000,
+    "wklad_wlasny": 10,
+    "okres_kredytowania": 180,
+    "oprocentowanie": 5.99,
+    "koszty" : [
+        {
+            "nazwa": "prowizja",
+            "wartosc": 0,
+            "operator": "procent",
+            "okres": "jednorazowy"
+        },
+        {
+            "nazwa": "pomostowe",
+            "wartosc": 346.2,
+            "operator": "stala",
+            "okres": "miesieczny",
+            "okresow": 3
+        },
+        {
+            "nazwa": "ubezpieczenie zycia",
+            "wartosc": 220.5,
+            "operator": "stala",
+            "okres": "miesieczny",
+            "okresow": 60
+        },
+        {
+            "nazwa": "ubezpieczenie hipoteki",
+            "wartosc": 660,
+            "operator": "stala",
+            "okres": "roczny"
+        },
+        {
+            "nazwa": "wycena",
+            "wartosc": 369,
+            "operator": "stala",
+            "okres": "jednorazowy"
+        }
+    ],
+    "nadplata": {
+        "nazwa": "nadplata",
+        "wartosc": 2000
+    },
+    "splata": {
+        "nazwa": "nadplata",
+        "wartosc": 100,
+        "operator": "stala",
+        "okres": "miesieczny"
+    }
+}
