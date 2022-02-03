@@ -2,10 +2,12 @@ mod koszt;
 mod kredyt;
 mod koszty;
 mod kalkulator;
+mod mapa_rat;
 mod nadplaty;
 
 use kredyt::*;
 use koszty::*;
+use mapa_rat::*;
 use kalkulator::*;
 
 pub use koszt::*;

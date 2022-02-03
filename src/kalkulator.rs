@@ -1,6 +1,6 @@
 use std::{collections::BTreeMap, fmt, cmp};
 
-use crate::{KosztKoncowy, kredyt::Kredyt, Koszt, Operator, Okres, Nadplaty};
+use crate::{KosztKoncowy, kredyt::Kredyt, Koszt, Operator, Okres, Nadplaty, mapa_rat::{Rata, KalkulatorRaty, MapaRat}};
 
 // TODO % posiadanej hipoteki po x latach
 // TODO nadplaty
@@ -12,7 +12,6 @@ pub struct Kalkulator {
     oprocentowanie: f64,
     kwota_kredytowania: f64,
     okres_kredytowania: u64,
-    rata_poczatkowa: Rata,
     calkowity_koszt_nieruchomosci: f64,
     koszt_kredytu: f64,
     mapa_kosztow: BTreeMap<String, KosztKoncowy>,
@@ -24,10 +23,8 @@ impl Kalkulator {
     pub fn new(dto: Kredyt) -> Self {
         let kwota_kredytowania = dto.wartosc_hipoteki - dto.wartosc_hipoteki * dto.wklad_wlasny / 100.0;
         let mapa_kosztow = Self::mapa_kosztow(&dto);
-        let nadplaty = dto.nadplaty;
 
-        let rata_poczatkowa = Rata::new(kwota_kredytowania, dto.oprocentowanie, dto.okres_kredytowania);
-        let mapa_rat = KalkulatorRaty::new(kwota_kredytowania, dto.oprocentowanie, dto.okres_kredytowania, nadplaty.clone()).mapa_rat();
+        let mapa_rat = MapaRat::new(kwota_kredytowania, &dto).mapa_rat().clone();
 
         let koszt_kredytu = Self::koszt_kredytu_internal(&mapa_rat, &mapa_kosztow, dto.okres_kredytowania, None);
         let calkowity_koszt_nieruchomosci = dto.wartosc_hipoteki + koszt_kredytu;
@@ -39,8 +36,7 @@ impl Kalkulator {
             oprocentowanie: dto.oprocentowanie,
             kwota_kredytowania,
             okres_kredytowania: dto.okres_kredytowania,
-            nadplaty,
-            rata_poczatkowa,
+            nadplaty: dto.nadplaty,
             calkowity_koszt_nieruchomosci,
             koszt_kredytu,
             mapa_kosztow,
@@ -121,91 +117,6 @@ impl fmt::Display for Kalkulator {
         writeln!(f, "Calkowity koszt kredytu {:.2}zl", self.koszt_kredytu(None))?;
 
         writeln!(f, "")
-    }
-}
-
-pub struct KalkulatorRaty {
-    rata_poczatkowa: Rata,
-    kwota_kredytowania: f64,
-    oprocentowanie: f64,
-    okres_kredytowania: u64,
-    nadplaty: Nadplaty,
-}
-
-impl KalkulatorRaty {
-    pub fn new(kwota_kredytowania: f64, oprocentowanie: f64, okres_kredytowania: u64, nadplaty: Nadplaty) -> Self {
-        let rata_poczatkowa = Rata::new(kwota_kredytowania, oprocentowanie, okres_kredytowania);
-
-        Self {
-            rata_poczatkowa,
-            kwota_kredytowania,
-            oprocentowanie,
-            okres_kredytowania,
-            nadplaty
-        }
-    }
-
-    pub fn mapa_rat(&self) -> BTreeMap<u64, Rata> {
-        let oprocentowanie = self.oprocentowanie / 100.0;
-        let mut kapital_do_splaty = self.kwota_kredytowania;
-        let mut aktualna_rata = self.rata_poczatkowa;
-        let mut ulga_od_nadplaty = 0.0;
-
-        (0..self.okres_kredytowania).map(|numer_raty| {
-            let odsetki = kapital_do_splaty * oprocentowanie * 30.4375 / 365.25;
-            let nadplata = self.nadplaty.wartosc(numer_raty);
-            let pozostaly_okres_kredytowania = self.okres_kredytowania - numer_raty;
-            let kapital = (aktualna_rata.wartosc() - odsetki).clamp(0.0, kapital_do_splaty);
-            let rata = Rata { kapital, odsetki, nadplata };
-
-            aktualna_rata = rata;
-            kapital_do_splaty = (kapital_do_splaty - aktualna_rata.kapital - nadplata).clamp(0.0, self.kwota_kredytowania);
-            ulga_od_nadplaty = nadplata / pozostaly_okres_kredytowania as f64;
-            aktualna_rata.ulga(ulga_od_nadplaty);
-
-            (numer_raty, rata)
-        })
-        .collect()
-    }
-}
-
-#[derive(Copy, Clone, Debug, Default)]
-pub struct Rata {
-    pub kapital: f64,
-    pub odsetki: f64,
-    pub nadplata: f64,
-}
-
-impl Rata {
-    pub fn wartosc(&self) -> f64 { self.kapital + self.odsetki }
-
-    pub fn new(kwota_kredytowania: f64, oprocentowanie: f64, okres_kredytowania: u64) -> Self {
-        let n = 12.0; // liczba rat w ciągu roku
-        let okres_kredytowania = okres_kredytowania as f64;
-        let oprocentowanie = oprocentowanie / 100.0;
-        let rata = kwota_kredytowania * oprocentowanie / (n * (1.0 - (n / (n + oprocentowanie)).powf(okres_kredytowania)));
-        let odsetki = kwota_kredytowania * oprocentowanie * 30.4375 / 365.25;
-        let kapital = rata - odsetki;
-
-        Self {
-            kapital,
-            odsetki,
-            nadplata: 0.0
-        }
-    }
-
-    pub fn ulga(&mut self, nadplata: f64) {
-        self.kapital = (self.kapital - nadplata).max(0.0);
-    }
-
-    pub fn nadplata(&mut self, nadplata: f64) {
-        self.nadplata = nadplata
-    }
-}
-
-impl fmt::Display for Rata {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{:.2} = kapital: {:.2}, odsetki: {:.2}, nadplata: {:.2}", self.wartosc() + self.nadplata, self.kapital, self.odsetki, self.nadplata)
     }
 }
 
