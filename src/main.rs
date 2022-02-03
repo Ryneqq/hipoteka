@@ -21,8 +21,9 @@ fn main() {
     // oferta("data/kredyt/santander_nadplata_new.json");
     // oferta("data/kredyt/millenium.json");
     // oferta("data/kredyt/pekao_sa_ubezpiecznie.json");
-    oferta("data/kredyt/pekao_sa.json");
+    // oferta("data/kredyt/pekao_sa.json");
     oferta("data/kredyt/pekao_sa_25.json");
+    // oferta("data/kredyt/pekao_sa_25_copy.json");
     // oferta("data/kredyt/alior_bank.json");
     // oferta("data/kredyt/alior_bank_nadplata_new.json");
     // oferta("data/kredyt/alior_bank_25.json");
