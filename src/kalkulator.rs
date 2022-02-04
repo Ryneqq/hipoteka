@@ -62,10 +62,11 @@ impl Kalkulator {
 
     pub fn procent_hipoteki(&self, numer_raty: impl Into<Option<u64>>) -> f64 {
         let numer_raty = numer_raty.into().unwrap_or(self.okres_kredytowania);
-        let wplacony_kapital: f64 = self.mapa_rat.range(0..numer_raty).map(|(_, v)| v.kapital + v.nadplata).sum();
+        let wplacony_kapital: f64 = self.mapa_rat.range(0..numer_raty).map(|(_, v)| v.kapital()).sum();
         let splacony_procent = wplacony_kapital * 100.0 / self.kwota_kredytowania;
 
-        self.wklad_wlasny + splacony_procent
+        // self.wklad_wlasny + splacony_procent
+        splacony_procent
     }
 
     fn mapa_kosztow(dto: &Kredyt) -> BTreeMap<String, KosztKoncowy> {
@@ -98,8 +99,8 @@ impl fmt::Display for Kalkulator {
 
         writeln!(f, "Raty:")?;
 
-        for (i, rata) in self.mapa_rat.iter().step_by(1) {
-            writeln!(f, "    * Skladowe raty (w {}. miesiacu kredytu): {:.2}", (i + 1) , rata)?;
+        for (i, rata) in self.mapa_rat.iter().step_by(12) {
+            writeln!(f, "    * Skladowe raty (w {}. miesiacu kredytu ({}.)): {:.2}", (i + 1) , ((i + 1)/12 + 1), rata)?;
         }
         writeln!(f, "{}", self.nadplaty)?;
 

@@ -45,7 +45,18 @@
         }
     ],
     "nadplaty": [
-
+        {
+            "wartosc": 1000,
+            "od": 0,
+            "do": 84,
+            "po_okresie": false
+        },
+        {
+            "wartosc": 1000,
+            "od": 0,
+            "do": 36,
+            "po_okresie": true
+        }
     ],
     "splata": {
         "nazwa": "nadplata",

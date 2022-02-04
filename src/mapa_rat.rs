@@ -54,7 +54,6 @@ impl KalkulatorRaty {
             let rata = Rata { kapital, odsetki, nadplata: 0.0 };
 
             aktualna_rata = rata;
-            dbg!(aktualna_rata.wartosc());
             kapital_do_splaty = (kapital_do_splaty - aktualna_rata.kapital).clamp(0.0, self.kwota_kredytowania);
             // kapital_do_splaty = (kapital_do_splaty - aktualna_rata.kapital - nadplata).clamp(0.0, self.kwota_kredytowania);
             // ulga_od_nadplaty = nadplata / pozostaly_okres_kredytowania as f64;
@@ -68,15 +67,13 @@ impl KalkulatorRaty {
 
         for numer_raty in 0..self.okres_kredytowania {
                 let nadplata = self.nadplaty.wartosc(numer_raty);
-                dbg!(nadplata);
                 let pozostaly_okres_kredytowania = self.okres_kredytowania - numer_raty - 1;
-                let ulga_od_nadplaty = nadplata / pozostaly_okres_kredytowania as f64;
-                dbg!(ulga_od_nadplaty);
+                let parts: u64 = (1..=pozostaly_okres_kredytowania).sum();
+                let ulga_od_nadplaty = nadplata / parts as f64;
                 let kapital_splacony = retval.values()
                     .map(|rata| rata.kapital())
                     .take(numer_raty as usize + 1)
                     .sum::<f64>();
-                dbg!(kapital_splacony);
                 let kapital_do_splaty = (self.kwota_kredytowania - kapital_splacony).max(0.0);
 
                 retval.get_mut(&numer_raty).map(|rata| {
@@ -84,8 +81,8 @@ impl KalkulatorRaty {
                     rata.odsetki = kapital_do_splaty * oprocentowanie * 30.4375 / 365.0;
                 });
 
-            for (_, rata) in retval.iter_mut().skip(numer_raty as usize + 1) {
-                rata.ulga(ulga_od_nadplaty);
+            for (i, (_, rata)) in retval.iter_mut().skip(numer_raty as usize + 1).enumerate() {
+                rata.ulga(ulga_od_nadplaty * (i + 1) as f64);
             }
         }
 

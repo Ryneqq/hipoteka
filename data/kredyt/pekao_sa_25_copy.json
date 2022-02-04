@@ -13,10 +13,10 @@
         },
         {
             "nazwa": "pomostowe",
-            "wartosc": 346.56,
+            "wartosc": 400,
             "operator": "stala",
             "okres": "miesieczny",
-            "okresow": 3
+            "okresow": 6
         },
         {
             "nazwa": "ubezpieczenie zycia",
@@ -46,13 +46,13 @@
     ],
     "nadplaty": [
         {
-            "wartosc": 2000,
+            "wartosc": 2200,
             "od": 0,
             "do": 84,
             "po_okresie": false
         },
         {
-            "wartosc": 1000,
+            "wartosc": 1200,
             "od": 0,
             "do": 36,
             "po_okresie": true

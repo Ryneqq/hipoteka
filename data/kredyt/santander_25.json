@@ -3,7 +3,7 @@
     "wartosc_hipoteki": 700000,
     "wklad_wlasny": 10,
     "okres_kredytowania": 300,
-    "oprocentowanie": 5.99,
+    "oprocentowanie": 6.59,
     "koszty" : [
         {
             "nazwa": "prowizja",
@@ -36,6 +36,26 @@
             "wartosc": 369,
             "operator": "stala",
             "okres": "jednorazowy"
+        }
+    ],
+    "nadplaty": [
+        {
+            "wartosc": 2200,
+            "od": 0,
+            "do": 84,
+            "po_okresie": false
+        },
+        {
+            "wartosc": 1200,
+            "od": 0,
+            "do": 36,
+            "po_okresie": true
+        },
+        {
+            "wartosc": 1000,
+            "od": 84,
+            "do": 180,
+            "po_okresie": false
         }
     ],
     "splata": {
